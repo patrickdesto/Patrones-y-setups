@@ -5,6 +5,8 @@ Tiempo promedio formacion de patron:
 
 
 
-Rsi / datos importantes que valos el rsi
-  -divergencia (agrgar filtro en para que si no esta sobre vendido en la zona del 26 para abajo no valore el patron)
-  -zona gatillo: valores 40-60 para que se active la entrada una vez que esta en por encima de la ema 20)
+Rsi - datos importantes que valos el rsi
+- divergencia (agrgar filtro en para que si no esta sobre vendido en la zona del 26 para abajo no valore el patron).
+- zona gatillo: valores 40-60 para que se active la entrada una vez que esta en por encima de la ema 20).
+
+ 
