@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Patterns — Crypto Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --surface: #0d1117;
+    --surface2: #141b24;
+    --surface3: #1c2533;
+    --border: #1e2d3d;
+    --border2: #243447;
+    --accent: #00e5ff;
+    --accent2: #7b61ff;
+    --accent3: #ff6b35;
+    --green: #00ff88;
+    --red: #ff3d5a;
+    --yellow: #ffd700;
+    --text: #e8f0fe;
+    --text2: #8899aa;
+    --text3: #556677;
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-display);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,16,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .logo span { color: var(--accent); }
+
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+  }
+  .btn-primary:hover { background: #33eaff; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,229,255,0.3); }
+
+  /* ─── LAYOUT ─── */
+  .app { position: relative; z-index: 1; }
+
+  /* ─── SIDEBAR ─── */
+  .layout { display: flex; min-height: calc(100vh - 64px); }
+
+  .sidebar {
+    width: 260px;
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    flex-shrink: 0;
+    background: rgba(13,17,23,0.6);
+  }
+
+  .sidebar-section { margin-bottom: 8px; }
+
+  .sidebar-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0 20px 8px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text2);
+    border-left: 2px solid transparent;
+  }
+
+  .sidebar-item:hover { background: var(--surface2); color: var(--text); }
+  .sidebar-item.active { background: rgba(0,229,255,0.07); color: var(--accent); border-left-color: var(--accent); }
+
+  .sidebar-item .count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--surface3);
+    padding: 2px 7px;
+    border-radius: 20px;
+    color: var(--text3);
+  }
+
+  .sidebar-item.active .count { background: rgba(0,229,255,0.15); color: var(--accent); }
+
+  /* ─── MAIN ─── */
+  .main { flex: 1; overflow: hidden; }
+
+  /* ─── DASHBOARD ─── */
+  .view { padding: 32px; display: none; }
+  .view.active { display: block; }
+
+  .view-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+
+  .view-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .view-subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 4px;
+    font-family: var(--font-mono);
+  }
+
+  /* ─── STATS ROW ─── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .stat-card:hover { border-color: var(--border2); }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .stat-card.s1::before { background: var(--accent); }
+  .stat-card.s2::before { background: var(--green); }
+  .stat-card.s3::before { background: var(--accent2); }
+  .stat-card.s4::before { background: var(--yellow); }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .stat-card.s1 .stat-value { color: var(--accent); }
+  .stat-card.s2 .stat-value { color: var(--green); }
+  .stat-card.s3 .stat-value { color: var(--accent2); }
+  .stat-card.s4 .stat-value { color: var(--yellow); }
+
+  /* ─── PATTERNS GRID ─── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 6px;
+  }
+
+  .filter-tab {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-tab.active, .filter-tab:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,255,0.07);
+  }
+
+  .patterns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .pattern-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .pattern-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .pattern-preview {
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pattern-preview svg { width: 100%; height: 100%; }
+
+  .pattern-body { padding: 16px; }
+
+  .pattern-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tag-ema { background: rgba(0,229,255,0.12); color: var(--accent); }
+  .tag-pa { background: rgba(123,97,255,0.15); color: var(--accent2); }
+  .tag-bos { background: rgba(255,107,53,0.15); color: var(--accent3); }
+  .tag-rsi { background: rgba(0,255,136,0.12); color: var(--green); }
+  .tag-bear { background: rgba(255,61,90,0.12); color: var(--red); }
+  .tag-bull { background: rgba(0,255,136,0.12); color: var(--green); }
+
+  .pattern-name {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 6px;
+  }
+
+  .pattern-desc {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+    font-family: var(--font-mono);
+    margin-bottom: 14px;
+  }
+
+  .pattern-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .winrate {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .winrate-bar {
+    width: 60px;
+    height: 4px;
+    background: var(--surface3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .winrate-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--green);
+  }
+
+  .winrate-fill.medium { background: var(--yellow); }
+  .winrate-fill.low { background: var(--red); }
+
+  .winrate-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  .winrate-label.medium { color: var(--yellow); }
+  .winrate-label.low { color: var(--red); }
+
+  .pattern-tf {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  /* ─── DETAIL VIEW ─── */
+  .detail-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text2);
+    cursor: pointer;
+    margin-bottom: 24px;
+    width: fit-content;
+    transition: color 0.15s;
+  }
+  .detail-back:hover { color: var(--accent); }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+  }
+
+  .detail-main {}
+
+  .detail-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .detail-tags { display: flex; gap: 8px; margin-bottom: 12px; }
+
+  .detail-name {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    margin-bottom: 8px;
+  }
+
+  .detail-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  .detail-chart {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .detail-chart-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .detail-chart-body {
+    padding: 20px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .setup-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .setup-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .setup-list { padding: 16px 20px; }
+
+  .setup-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .setup-item:last-child { border-bottom: none; }
+
+  .setup-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    width: 18px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .setup-text { color: var(--text2); line-height: 1.6; }
+
+  /* Pine Script block */
+  .pine-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .pine-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pine-title { font-size: 13px; font-weight: 700; }
+  .pine-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    background: rgba(0,255,136,0.12);
+    color: var(--green);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .pine-code {
+    padding: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.8;
+    color: #a9b7c6;
+    overflow-x: auto;
+  }
+
+  .pine-code .c { color: #6a9955; }
+  .pine-code .k { color: #569cd6; }
+  .pine-code .f { color: #dcdcaa; }
+  .pine-code .s { color: #ce9178; }
+  .pine-code .n { color: #9cdcfe; }
+  .pine-code .v { color: #4ec9b0; }
+
+  .copy-btn {
+    margin: 0 20px 20px;
+    width: calc(100% - 40px);
+    padding: 10px;
+    background: rgba(0,229,255,0.08);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 6px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .copy-btn:hover { background: rgba(0,229,255,0.15); }
+
+  /* Sidebar derecha detail */
+  .detail-sidebar {}
+
+  .detail-stats {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .detail-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .detail-stat-row:last-child { border-bottom: none; }
+
+  .detail-stat-label { color: var(--text2); font-family: var(--font-mono); font-size: 11px; }
+  .detail-stat-val { font-weight: 700; font-size: 15px; }
+
+  .screenshots-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .screenshots-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .add-screenshot-btn {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px dashed var(--border2);
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .add-screenshot-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .screenshots-body { padding: 16px; }
+
+  .screenshot-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .screenshot-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .screenshot-pair {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .screenshot-date {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text3);
+  }
+
+  .screenshot-result {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .result-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  .result-dot.win { background: var(--green); }
+  .result-dot.loss { background: var(--red); }
+
+  .screenshot-img-placeholder {
+    width: 100%;
+    height: 80px;
+    background: var(--surface3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 8px;
+    border: 1px dashed var(--border);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .screenshot-img-placeholder:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ADD FORM */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+    width: 560px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 28px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+
+  .modal-subtitle {
+    font-size: 12px;
+    color: var(--text2);
+    font-family: var(--font-mono);
+    margin-bottom: 24px;
+  }
+
+  .form-group { margin-bottom: 18px; }
+
+  label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text2);
+    margin-bottom: 7px;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+
+  textarea { min-height: 80px; resize: vertical; line-height: 1.6; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+  /* Alerts view */
+  .alerts-table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  th {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  td {
+    padding: 14px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+
+  .badge-win { background: rgba(0,255,136,0.12); color: var(--green); }
+  .badge-loss { background: rgba(255,61,90,0.12); color: var(--red); }
+  .badge-pending { background: rgba(255,215,0,0.1); color: var(--yellow); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--surface2);
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    padding: 14px 20px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--green);
+    z-index: 999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+  select option { background: var(--surface2); }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text3);
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">📈</div>
+    Crypto<span>Playbook</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost" onclick="openModal()">+ Nuevo Patrón</button>
+    <button class="btn btn-primary" onclick="showView('alerts')">📸 Mis Alertas</button>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Navegación</div>
+    <div class="sidebar-item active" onclick="showView('dashboard')" id="nav-dashboard">
+      <span>🗂</span> Dashboard <span class="count" id="cnt-all">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterView('EMA')" id="nav-ema">
+      <span>〰</span> EMA Ribbon <span class="count" id="cnt-ema">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterView('RSI')" id="nav-rsi">
+      <span>📊</span> RSI <span class="count" id="cnt-rsi">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterView('Price Action')" id="nav-pa">
+      <span>🕯</span> Price Action <span class="count" id="cnt-pa">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterView('BOS')" id="nav-bos">
+      <span>🔀</span> Estructura <span class="count" id="cnt-bos">0</span>
+    </div>
+  </div>
+  <div class="sidebar-section" style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border)">
+    <div class="sidebar-label">Gestión</div>
+    <div class="sidebar-item" onclick="showView('alerts')">
+      <span>📸</span> Registro Alertas
+    </div>
+    <div class="sidebar-item" onclick="showView('pinescript')">
+      <span>📟</span> Pine Scripts
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div class="view-header">
+      <div>
+        <div class="view-title">Mi Carpeta de Patrones</div>
+        <div class="view-subtitle">// crypto · ema ribbon · rsi · price action · estructura</div>
+      </div>
+      <button class="btn btn-primary" onclick="openModal()">+ Agregar Patrón</button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card s1">
+        <div class="stat-label">Total Patrones</div>
+        <div class="stat-value" id="stat-total">0</div>
+      </div>
+      <div class="stat-card s2">
+        <div class="stat-label">Win Rate Prom.</div>
+        <div class="stat-value" id="stat-wr">—</div>
+      </div>
+      <div class="stat-card s3">
+        <div class="stat-label">Alertas Registradas</div>
+        <div class="stat-value" id="stat-alerts">0</div>
+      </div>
+      <div class="stat-card s4">
+        <div class="stat-label">Con Pine Script</div>
+        <div class="stat-value" id="stat-pine">0</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">Patrones activos</div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="setFilter('Todos',this)">Todos</button>
+        <button class="filter-tab" onclick="setFilter('Bull',this)">Bull</button>
+        <button class="filter-tab" onclick="setFilter('Bear',this)">Bear</button>
+      </div>
+    </div>
+
+    <div class="patterns-grid" id="patterns-grid">
+      <!-- cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- DETAIL -->
+  <div class="view" id="view-detail">
+    <div class="detail-back" onclick="showView('dashboard')">← Volver a la carpeta</div>
+    <div class="detail-grid">
+      <div class="detail-main" id="detail-main"></div>
+      <div class="detail-sidebar" id="detail-sidebar"></div>
+    </div>
+  </div>
+
+  <!-- ALERTS VIEW -->
+  <div class="view" id="view-alerts">
+    <div class="view-header">
+      <div>
+        <div class="view-title">Registro de Alertas</div>
+        <div class="view-subtitle">// capturas de patrones confirmados en tiempo real</div>
+      </div>
+      <button class="btn btn-primary" onclick="openAlertModal()">+ Registrar Alerta</button>
+    </div>
+
+    <div class="alerts-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Par</th>
+            <th>Patrón</th>
+            <th>Timeframe</th>
+            <th>Dirección</th>
+            <th>Resultado</th>
+            <th>Captura</th>
+          </tr>
+        </thead>
+        <tbody id="alerts-tbody">
+          <tr><td colspan="7" class="empty-state">No hay alertas registradas aún.<br>Cuando detectes un patrón, agregalo aquí.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PINE SCRIPTS VIEW -->
+  <div class="view" id="view-pinescript">
+    <div class="view-header">
+      <div>
+        <div class="view-title">Pine Scripts</div>
+        <div class="view-subtitle">// códigos listos para pegar en TradingView</div>
+      </div>
+    </div>
+    <div id="pine-scripts-list"></div>
+  </div>
+
+</main>
+</div>
+</div>
+
+<!-- MODAL AGREGAR PATRÓN -->
+<div class="modal-overlay" id="modal-pattern">
+  <div class="modal">
+    <div class="modal-title">Nuevo Patrón</div>
+    <div class="modal-subtitle">// completá el setup y generamos el Pine Script automáticamente</div>
+
+    <div class="form-group">
+      <label>Nombre del patrón</label>
+      <input type="text" id="f-name" placeholder="ej: EMA Ribbon Pullback + RSI 50">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Categoría principal</label>
+        <select id="f-cat">
+          <option>EMA</option>
+          <option>RSI</option>
+          <option>Price Action</option>
+          <option>BOS</option>
+          <option>Combinado</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Dirección</label>
+        <select id="f-dir">
+          <option>Bull</option>
+          <option>Bear</option>
+          <option>Ambas</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Timeframe principal</label>
+        <select id="f-tf">
+          <option>15m</option>
+          <option>1h</option>
+          <option>4h</option>
+          <option>1D</option>
+          <option>Multi-TF</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Win Rate estimado %</label>
+        <input type="number" id="f-wr" placeholder="ej: 65" min="0" max="100">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Descripción del patrón</label>
+      <textarea id="f-desc" placeholder="Describí brevemente qué es este patrón y en qué contexto aparece..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Condiciones del setup (una por línea)</label>
+      <textarea id="f-setup" placeholder="Precio por encima del ribbon EMA 20/50/100/200&#10;RSI > 50 y con pendiente alcista&#10;Cierre de vela por encima de EMA 20&#10;Volumen creciente en ruptura"></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="savePattern()">Guardar + Generar Pine Script</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REGISTRAR ALERTA -->
+<div class="modal-overlay" id="modal-alert">
+  <div class="modal">
+    <div class="modal-title">Registrar Alerta</div>
+    <div class="modal-subtitle">// guardá cuando el patrón se da correctamente</div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Par</label>
+        <input type="text" id="a-pair" placeholder="ej: BTC/USDT">
+      </div>
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" id="a-date">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Patrón</label>
+        <select id="a-pattern"></select>
+      </div>
+      <div class="form-group">
+        <label>Timeframe</label>
+        <select id="a-tf">
+          <option>15m</option><option>1h</option><option>4h</option><option>1D</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Dirección</label>
+        <select id="a-dir"><option>Long</option><option>Short</option></select>
+      </div>
+      <div class="form-group">
+        <label>Resultado</label>
+        <select id="a-result"><option>Win</option><option>Loss</option><option>Pendiente</option></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Notas / Observaciones</label>
+      <textarea id="a-notes" placeholder="Qué ocurrió, qué salió bien o mal, qué podés mejorar..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeAlertModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveAlert()">Guardar Alerta</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────
+let patterns = [
+  {
+    id: 1,
+    name: "EMA Ribbon Pullback Alcista",
+    category: "EMA",
+    direction: "Bull",
+    tf: "1h",
+    wr: 68,
+    desc: "El precio hace un pullback hasta tocar o rozar la EMA 20 (o ribbon) después de una ruptura alcista. Las EMAs están alineadas (20>50>100>200) y el RSI rebota sobre 50.",
+    setup: [
+      "EMA 20 > EMA 50 > EMA 100 > EMA 200 (ribbon alineado alcista)",
+      "Precio retrocede y toca zona de EMA 20 o EMA 50",
+      "RSI entre 45-55, rebotando desde zona media",
+      "Cierre de vela alcista (preferente pin bar o engulfing) sobre la EMA tocada",
+      "Volumen decrece en retroceso y aumenta en señal de entrada"
+    ],
+    pine: `// EMA Ribbon Pullback Alcista — by CryptoPlaybook
+//@version=5
+indicator("EMA Pullback Setup", overlay=true)
+
+// EMAs
+ema20  = ta.ema(close, 20)
+ema50  = ta.ema(close, 50)
+ema100 = ta.ema(close, 100)
+ema200 = ta.ema(close, 200)
+
+// RSI
+rsi = ta.rsi(close, 14)
+
+// Ribbon alineado alcista
+ribbonBull = ema20 > ema50 and ema50 > ema100 and ema100 > ema200
+
+// Precio toca zona EMA 20 o 50
+touchEma20 = low <= ema20 * 1.002 and close >= ema20 * 0.998
+touchEma50 = low <= ema50 * 1.002 and close >= ema50 * 0.998
+
+// RSI en zona media
+rsiOk = rsi > 45 and rsi < 65
+
+// Vela cierra alcista
+bullCandle = close > open
+
+// SEÑAL
+signal = ribbonBull and (touchEma20 or touchEma50) and rsiOk and bullCandle
+
+// Plot
+plot(ema20, "EMA 20", color=#00e5ff, linewidth=1)
+plot(ema50, "EMA 50", color=#7b61ff, linewidth=1)
+plot(ema100, "EMA 100", color=#ff6b35, linewidth=1)
+plot(ema200, "EMA 200", color=#ff3d5a, linewidth=2)
+
+plotshape(signal, title="Pullback Setup", location=location.belowbar,
+  color=color.new(color.green, 0), style=shape.triangleup, size=size.normal)
+
+// ALERTA
+alertcondition(signal, title="EMA Pullback Alcista", message="✅ Setup EMA Pullback Alcista — {{ticker}} {{interval}}")`,
+    screenshots: [
+      { pair: "BTC/USDT", date: "2024-03-12", result: "win", note: "Rebote perfecto en EMA 50 con RSI en 52" }
+    ]
+  },
+  {
+    id: 2,
+    name: "RSI Divergencia Alcista",
+    category: "RSI",
+    direction: "Bull",
+    tf: "4h",
+    wr: 62,
+    desc: "El precio hace mínimos más bajos pero el RSI hace mínimos más altos. Señal de agotamiento bajista y posible reversión alcista. Mayor efectividad cuando ocurre en zona de soporte o EMA 100/200.",
+    setup: [
+      "Precio marca nuevo mínimo (lower low visible)",
+      "RSI en el mismo periodo marca mínimo más alto (higher low en RSI)",
+      "RSI por debajo de 40 (zona de sobreventa o cerca)",
+      "Precio cerca de zona de soporte, EMA 100 o EMA 200",
+      "Confirmar con vela de reversión (hammer, pin bar, engulfing alcista)"
+    ],
+    pine: `// RSI Divergencia Alcista — by CryptoPlaybook
+//@version=5
+indicator("RSI Divergencia Alcista", overlay=false)
+
+rsiLen = input.int(14, "RSI Length")
+rsi = ta.rsi(close, rsiLen)
+
+// Detectar divergencia (simplificada - mínimo reciente)
+rsiLow1 = ta.lowest(rsi, 10)
+rsiLow2 = ta.lowest(rsi[10], 10)
+priceLow1 = ta.lowest(low, 10)
+priceLow2 = ta.lowest(low[10], 10)
+
+bullDiv = priceLow1 < priceLow2 and rsiLow1 > rsiLow2 and rsi < 45
+
+plot(rsi, "RSI", color=#7b61ff, linewidth=2)
+hline(70, "Sobrecompra", color=color.red, linestyle=hline.style_dashed)
+hline(50, "Medio", color=color.gray, linestyle=hline.style_dashed)
+hline(30, "Sobreventa", color=color.green, linestyle=hline.style_dashed)
+
+bgcolor(bullDiv ? color.new(color.green, 85) : na, title="Divergencia Bull")
+
+alertcondition(bullDiv, "RSI Divergencia Alcista", "📈 RSI Bull Divergence — {{ticker}} {{interval}}")`,
+    screenshots: []
+  },
+  {
+    id: 3,
+    name: "BOS + Retest Alcista",
+    category: "BOS",
+    direction: "Bull",
+    tf: "1h",
+    wr: 71,
+    desc: "Break of Structure alcista: el precio rompe el máximo previo relevante con impulso, luego retestea esa zona convertida en soporte. Entrada en el retest con confirmación.",
+    setup: [
+      "Identificar máximo relevante previo (swing high)",
+      "Precio cierra por encima del máximo con cuerpo de vela sólido (BOS confirmado)",
+      "Esperar retroceso hasta zona del BOS (antiguo máximo ahora soporte)",
+      "Confirmación en zona: pin bar, engulfing, o vela de indecisión seguida de alcista",
+      "RSI > 50 y EMA 20 por encima de EMA 50 para confirmar estructura"
+    ],
+    pine: `// BOS + Retest Alcista — by CryptoPlaybook
+//@version=5
+indicator("BOS Retest Setup", overlay=true)
+
+lookback = input.int(20, "Lookback para swing high")
+
+ema20 = ta.ema(close, 20)
+ema50 = ta.ema(close, 50)
+rsi   = ta.rsi(close, 14)
+
+// Swing High
+swingHigh = ta.highest(high, lookback)[1]
+
+// BOS: cierre por encima del swing high
+bos = close > swingHigh and close[1] <= swingHigh
+
+// Retest: precio vuelve a zona del BOS
+retestZone = close >= swingHigh * 0.995 and close <= swingHigh * 1.01
+
+// Estructura favorable
+structureOk = ema20 > ema50 and rsi > 48
+
+signal = retestZone and structureOk and not bos
+
+plot(ema20, "EMA 20", color=#00e5ff)
+plot(ema50, "EMA 50", color=#7b61ff)
+plot(swingHigh, "Swing High / BOS", color=color.orange, style=plot.style_stepline_diamond)
+
+plotshape(bos, "BOS", location=location.abovebar, color=color.orange,
+  style=shape.labeldown, text="BOS", size=size.small)
+plotshape(signal, "Retest Entry", location=location.belowbar,
+  color=color.new(color.green,0), style=shape.triangleup, size=size.normal)
+
+alertcondition(bos, "BOS Detectado", "🔴 Break of Structure — {{ticker}} {{interval}}")
+alertcondition(signal, "Retest Entrada", "✅ BOS Retest Setup — {{ticker}} {{interval}}")`,
+    screenshots: [
+      { pair: "ETH/USDT", date: "2024-03-18", result: "win", note: "BOS limpio en 1H, retest perfecto con pin bar" },
+      { pair: "SOL/USDT", date: "2024-03-22", result: "loss", note: "Retest válido pero estructura se rompió, posición cerrada en -1.5R" }
+    ]
+  },
+  {
+    id: 4,
+    name: "Engulfing Alcista en EMA 200",
+    category: "Price Action",
+    direction: "Bull",
+    tf: "4h",
+    wr: 74,
+    desc: "Vela envolvente alcista (bullish engulfing) que se forma justo sobre la EMA 200, zona clave de soporte de largo plazo. Alta probabilidad cuando el ribbon también está alineado.",
+    setup: [
+      "Precio llega a testear la EMA 200 desde arriba",
+      "Vela bearish previa significativa",
+      "Siguiente vela cierra por encima del cuerpo completo de la vela previa (engulfing)",
+      "Engulfing ocurre en contacto o muy cerca de EMA 200",
+      "RSI en zona 35-50 (ni sobrecomprado ni muy sobrevendido)"
+    ],
+    pine: `// Bullish Engulfing en EMA 200 — by CryptoPlaybook
+//@version=5
+indicator("Engulfing EMA200", overlay=true)
+
+ema200 = ta.ema(close, 200)
+rsi    = ta.rsi(close, 14)
+
+// Engulfing alcista clásico
+bearPrev   = close[1] < open[1]
+bullCurrent = close > open
+engulfing  = bullCurrent and bearPrev and
+             close > open[1] and open < close[1]
+
+// Cerca de EMA 200
+nearEma200 = low <= ema200 * 1.005 and high >= ema200 * 0.995
+
+// RSI en zona válida
+rsiOk = rsi > 30 and rsi < 60
+
+signal = engulfing and nearEma200 and rsiOk
+
+plot(ema200, "EMA 200", color=#ff3d5a, linewidth=2)
+
+plotshape(signal, "Engulfing EMA200", location=location.belowbar,
+  color=color.new(color.green, 0), style=shape.triangleup, size=size.large)
+
+alertcondition(signal, "Engulfing EMA200", "🕯 Bullish Engulfing en EMA200 — {{ticker}} {{interval}}")`,
+    screenshots: []
+  }
+];
+
+let alerts = [];
+let currentFilter = 'Todos';
+let currentDetail = null;
+
+// ─── UTILS ─────────────────────────────────────────────────────
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  if (id === 'dashboard') document.getElementById('nav-dashboard').classList.add('active');
+  if (id === 'alerts') renderAlerts();
+  if (id === 'pinescript') renderPineScripts();
+  if (id === 'dashboard') renderPatterns();
+}
+
+function filterView(cat) {
+  currentFilter = cat;
+  showView('dashboard');
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  const map = { 'EMA': 'nav-ema', 'RSI': 'nav-rsi', 'Price Action': 'nav-pa', 'BOS': 'nav-bos' };
+  if (map[cat]) document.getElementById(map[cat]).classList.add('active');
+}
+
+function setFilter(val, el) {
+  currentFilter = val;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderPatterns();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─── RENDER PATTERNS ───────────────────────────────────────────
+
+function getTagClass(cat) {
+  const m = { 'EMA': 'tag-ema', 'RSI': 'tag-rsi', 'Price Action': 'tag-pa', 'BOS': 'tag-bos' };
+  return m[cat] || 'tag-ema';
+}
+
+function getDirClass(dir) {
+  return dir === 'Bull' ? 'tag-bull' : dir === 'Bear' ? 'tag-bear' : 'tag-ema';
+}
+
+function wrClass(wr) {
+  if (wr >= 65) return '';
+  if (wr >= 50) return 'medium';
+  return 'low';
+}
+
+function miniChart(pattern) {
+  const bg = { 'Bull': 'rgba(0,255,136,0.05)', 'Bear': 'rgba(255,61,90,0.05)', 'Ambas': 'rgba(0,229,255,0.05)' };
+  const stroke = { 'Bull': '#00ff88', 'Bear': '#ff3d5a', 'Ambas': '#00e5ff' };
+  const b = bg[pattern.direction] || bg['Ambas'];
+  const s = stroke[pattern.direction] || stroke['Ambas'];
+
+  const charts = {
+    'EMA': `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" style="background:${b}">
+      <polyline points="0,90 40,80 80,85 120,60 160,70 200,40 240,30 300,20" fill="none" stroke="${s}" stroke-width="2.5"/>
+      <polyline points="0,100 40,95 80,90 120,80 160,75 200,65 240,55 300,45" fill="none" stroke="#7b61ff" stroke-width="1.5" opacity="0.7"/>
+      <polyline points="0,108 40,105 80,100 120,95 160,92 200,85 240,78 300,70" fill="none" stroke="#ff6b35" stroke-width="1" opacity="0.5"/>
+      <circle cx="200" cy="40" r="5" fill="${s}" opacity="0.8"/>
+      <text x="10" y="15" fill="#8899aa" font-size="9" font-family="monospace">EMA RIBBON</text>
+    </svg>`,
+    'RSI': `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" style="background:${b}">
+      <line x1="0" y1="30" x2="300" y2="30" stroke="#ff3d5a" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+      <line x1="0" y1="90" x2="300" y2="90" stroke="#00ff88" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+      <line x1="0" y1="60" x2="300" y2="60" stroke="#556677" stroke-width="1" opacity="0.4"/>
+      <polyline points="0,40 40,55 80,95 120,85 160,50 200,35 240,45 300,40" fill="none" stroke="${s}" stroke-width="2.5"/>
+      <text x="10" y="15" fill="#8899aa" font-size="9" font-family="monospace">RSI 14</text>
+    </svg>`,
+    'BOS': `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" style="background:${b}">
+      <line x1="0" y1="55" x2="300" y2="55" stroke="#ff6b35" stroke-width="1" stroke-dasharray="5,3" opacity="0.6"/>
+      <polyline points="0,90 50,85 100,75 140,60 160,45 180,55 220,35 280,25" fill="none" stroke="${s}" stroke-width="2.5"/>
+      <text x="162" y="48" fill="#ff6b35" font-size="8" font-family="monospace">BOS</text>
+      <text x="10" y="15" fill="#8899aa" font-size="9" font-family="monospace">ESTRUCTURA</text>
+    </svg>`,
+    'Price Action': `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" style="background:${b}">
+      <rect x="60" y="50" width="12" height="40" fill="#ff3d5a" rx="1"/>
+      <line x1="66" y1="40" x2="66" y2="100" stroke="#ff3d5a" stroke-width="1.5"/>
+      <rect x="90" y="30" width="12" height="60" fill="#00ff88" rx="1"/>
+      <line x1="96" y1="20" x2="96" y2="100" stroke="#00ff88" stroke-width="1.5"/>
+      <rect x="120" y="45" width="12" height="35" fill="#00ff88" rx="1"/>
+      <circle cx="96" cy="20" r="4" fill="${s}" opacity="0.9"/>
+      <text x="10" y="15" fill="#8899aa" font-size="9" font-family="monospace">PRICE ACTION</text>
+    </svg>`
+  };
+
+  return charts[pattern.category] || charts['EMA'];
+}
+
+function renderPatterns() {
+  const grid = document.getElementById('patterns-grid');
+
+  let filtered = patterns;
+  if (currentFilter !== 'Todos' && ['Bull','Bear'].includes(currentFilter)) {
+    filtered = patterns.filter(p => p.direction === currentFilter);
+  } else if (!['Todos','Bull','Bear'].includes(currentFilter)) {
+    filtered = patterns.filter(p => p.category === currentFilter);
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📭</div>No hay patrones en esta categoría aún.<br>Agregá uno con el botón "Nuevo Patrón".</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => {
+    const wrc = wrClass(p.wr);
+    const fillW = p.wr || 0;
+    return `<div class="pattern-card" onclick="openDetail(${p.id})">
+      <div class="pattern-preview">${miniChart(p)}</div>
+      <div class="pattern-body">
+        <div class="pattern-tags">
+          <span class="tag ${getTagClass(p.category)}">${p.category}</span>
+          <span class="tag ${getDirClass(p.direction)}">${p.direction}</span>
+          ${p.pine ? '<span class="tag tag-rsi">Pine Script ✓</span>' : ''}
+        </div>
+        <div class="pattern-name">${p.name}</div>
+        <div class="pattern-desc">${p.desc.substring(0, 90)}…</div>
+        <div class="pattern-footer">
+          <div class="winrate">
+            <div class="winrate-bar"><div class="winrate-fill ${wrc}" style="width:${fillW}%"></div></div>
+            <span class="winrate-label ${wrc}">${p.wr}%</span>
+          </div>
+          <span class="pattern-tf">${p.tf}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  updateStats();
+  updateSidebarCounts();
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = patterns.length;
+  const wrs = patterns.filter(p => p.wr).map(p => p.wr);
+  document.getElementById('stat-wr').textContent = wrs.length ? Math.round(wrs.reduce((a,b)=>a+b,0)/wrs.length) + '%' : '—';
+  document.getElementById('stat-alerts').textContent = alerts.length;
+  document.getElementById('stat-pine').textContent = patterns.filter(p => p.pine).length;
+}
+
+function updateSidebarCounts() {
+  document.getElementById('cnt-all').textContent = patterns.length;
+  document.getElementById('cnt-ema').textContent = patterns.filter(p=>p.category==='EMA').length;
+  document.getElementById('cnt-rsi').textContent = patterns.filter(p=>p.category==='RSI').length;
+  document.getElementById('cnt-pa').textContent = patterns.filter(p=>p.category==='Price Action').length;
+  document.getElementById('cnt-bos').textContent = patterns.filter(p=>p.category==='BOS').length;
+}
+
+// ─── DETAIL ────────────────────────────────────────────────────
+
+function openDetail(id) {
+  const p = patterns.find(x => x.id === id);
+  if (!p) return;
+  currentDetail = p;
+
+  const wrc = wrClass(p.wr);
+
+  document.getElementById('detail-main').innerHTML = `
+    <div class="detail-header">
+      <div class="detail-tags">
+        <span class="tag ${getTagClass(p.category)}">${p.category}</span>
+        <span class="tag ${getDirClass(p.direction)}">${p.direction}</span>
+        <span class="tag tag-pa">${p.tf}</span>
+      </div>
+      <div class="detail-name">${p.name}</div>
+      <div class="detail-desc">${p.desc}</div>
+    </div>
+
+    <div class="detail-chart">
+      <div class="detail-chart-header">📊 Esquema visual del patrón</div>
+      <div class="detail-chart-body">${miniChart(p)}</div>
+    </div>
+
+    <div class="setup-section">
+      <div class="setup-header">⚡ Condiciones del Setup</div>
+      <div class="setup-list">
+        ${p.setup.map((s, i) => `
+          <div class="setup-item">
+            <span class="setup-num">${String(i+1).padStart(2,'0')}</span>
+            <span class="setup-text">${s}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    ${p.pine ? `<div class="pine-block">
+      <div class="pine-header">
+        <span class="pine-title">📟 Pine Script — TradingView</span>
+        <span class="pine-badge">v5 ✓</span>
+      </div>
+      <div class="pine-code"><pre>${highlightPine(p.pine)}</pre></div>
+      <button class="copy-btn" onclick="copyPine(${p.id})">📋 Copiar código al portapapeles</button>
+    </div>` : ''}
+  `;
+
+  const pAlerts = alerts.filter(a => a.pattern === p.name);
+  const allScreenshots = [...(p.screenshots || []), ...pAlerts];
+
+  document.getElementById('detail-sidebar').innerHTML = `
+    <div class="detail-stats">
+      <div class="detail-stat-row">
+        <span class="detail-stat-label">Win Rate</span>
+        <span class="detail-stat-val" style="color:var(--green)">${p.wr}%</span>
+      </div>
+      <div class="detail-stat-row">
+        <span class="detail-stat-label">Timeframe</span>
+        <span class="detail-stat-val">${p.tf}</span>
+      </div>
+      <div class="detail-stat-row">
+        <span class="detail-stat-label">Categoría</span>
+        <span class="detail-stat-val">${p.category}</span>
+      </div>
+      <div class="detail-stat-row">
+        <span class="detail-stat-label">Dirección</span>
+        <span class="detail-stat-val">${p.direction}</span>
+      </div>
+      <div class="detail-stat-row">
+        <span class="detail-stat-label">Capturas</span>
+        <span class="detail-stat-val">${allScreenshots.length}</span>
+      </div>
+    </div>
+
+    <div class="screenshots-section">
+      <div class="screenshots-header">
+        📸 Capturas de alertas
+        <button class="add-screenshot-btn" onclick="openAlertModalFor('${p.name}')">+ Agregar</button>
+      </div>
+      <div class="screenshots-body">
+        ${allScreenshots.length === 0
+          ? `<div style="text-align:center;padding:24px;font-family:var(--font-mono);font-size:11px;color:var(--text3)">Sin capturas aún.<br>Registrá cuando el patrón se dé.</div>`
+          : allScreenshots.map(s => `
+          <div class="screenshot-item">
+            <div class="screenshot-meta">
+              <span class="screenshot-pair">${s.pair}</span>
+              <span class="screenshot-date">${s.date}</span>
+            </div>
+            <div class="screenshot-result">
+              <div class="result-dot ${s.result}"></div>
+              <span style="color:${s.result==='win'?'var(--green)':s.result==='loss'?'var(--red)':'var(--yellow)'}">
+                ${s.result === 'win' ? 'WIN' : s.result === 'loss' ? 'LOSS' : 'PENDIENTE'}
+              </span>
+            </div>
+            ${s.note ? `<div style="font-size:11px;color:var(--text2);margin-top:6px;font-family:var(--font-mono)">${s.note}</div>` : ''}
+            <div class="screenshot-img-placeholder">📎 Adjuntar captura de TradingView</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  showView('detail');
+}
+
+function highlightPine(code) {
+  return code
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/(\/\/.*)/g, '<span class="c">$1</span>')
+    .replace(/\b(indicator|input|int|float|bool|string|color|plot|plotshape|hline|bgcolor|alertcondition|ta\.\w+|math\.\w+|strategy\.\w+)\b/g, '<span class="f">$1</span>')
+    .replace(/\b(var|varip|if|else|and|or|not|true|false|for|to|by|while|switch|case|default|import|export|method|type|enum|matrix|array|map|series|simple|const)\b/g, '<span class="k">$1</span>')
+    .replace(/"([^"]*)"/g, '<span class="s">"$1"</span>');
+}
+
+function copyPine(id) {
+  const p = patterns.find(x => x.id === id);
+  if (!p || !p.pine) return;
+  navigator.clipboard.writeText(p.pine).then(() => showToast('✅ Pine Script copiado al portapapeles'));
+}
+
+// ─── ALERTS ────────────────────────────────────────────────────
+
+function renderAlerts() {
+  const tbody = document.getElementById('alerts-tbody');
+  if (alerts.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No hay alertas registradas aún.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = alerts.map(a => `
+    <tr>
+      <td style="font-family:var(--font-mono);font-size:11px;color:var(--text2)">${a.date}</td>
+      <td style="font-weight:700;color:var(--accent)">${a.pair}</td>
+      <td>${a.pattern}</td>
+      <td style="font-family:var(--font-mono);font-size:11px">${a.tf}</td>
+      <td><span class="tag ${a.dir==='Long'?'tag-bull':'tag-bear'}">${a.dir}</span></td>
+      <td><span class="badge badge-${a.result.toLowerCase()}">${a.result}</span></td>
+      <td style="font-family:var(--font-mono);font-size:10px;color:var(--text3)">Sin imagen</td>
+    </tr>`).join('');
+}
+
+function renderPineScripts() {
+  const list = document.getElementById('pine-scripts-list');
+  const withPine = patterns.filter(p => p.pine);
+  if (withPine.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📟</div>Agregá patrones para ver sus Pine Scripts aquí.</div>`;
+    return;
+  }
+  list.innerHTML = withPine.map(p => `
+    <div class="pine-block" style="margin-bottom:20px">
+      <div class="pine-header">
+        <span class="pine-title">${p.name}</span>
+        <span class="pine-badge">Pine Script v5</span>
+      </div>
+      <div class="pine-code"><pre>${highlightPine(p.pine)}</pre></div>
+      <button class="copy-btn" onclick="copyPine(${p.id})">📋 Copiar ${p.name}</button>
+    </div>`).join('');
+}
+
+// ─── MODAL PATTERN ─────────────────────────────────────────────
+
+function openModal() {
+  document.getElementById('modal-pattern').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-pattern').classList.remove('open');
+}
+
+function generatePine(p) {
+  return `// ${p.name} — by CryptoPlaybook
+//@version=5
+indicator("${p.name}", overlay=${p.category === 'RSI' ? 'false' : 'true'})
+
+// EMAs
+ema20  = ta.ema(close, 20)
+ema50  = ta.ema(close, 50)
+ema100 = ta.ema(close, 100)
+ema200 = ta.ema(close, 200)
+
+// RSI
+rsi = ta.rsi(close, 14)
+
+// TODO: Personalizar condiciones según el setup
+// Condiciones del setup: ${p.setup.join(' | ')}
+
+ribbonBull = ema20 > ema50 and ema50 > ema100 and ema100 > ema200
+ribbonBear = ema20 < ema50 and ema50 < ema100 and ema100 < ema200
+
+${p.direction === 'Bull' ? 'signal = ribbonBull and rsi > 50' : p.direction === 'Bear' ? 'signal = ribbonBear and rsi < 50' : 'signal = (ribbonBull and rsi > 50) or (ribbonBear and rsi < 50)'}
+
+plot(ema20, "EMA 20", color=#00e5ff, linewidth=1)
+plot(ema50, "EMA 50", color=#7b61ff, linewidth=1)
+plot(ema100, "EMA 100", color=#ff6b35, linewidth=1)
+plot(ema200, "EMA 200", color=#ff3d5a, linewidth=2)
+
+plotshape(signal, title="Señal", location=location.${p.direction === 'Bear' ? 'abovebar' : 'belowbar'},
+  color=color.new(${p.direction === 'Bear' ? 'color.red' : 'color.green'}, 0),
+  style=${p.direction === 'Bear' ? 'shape.triangledown' : 'shape.triangleup'}, size=size.normal)
+
+alertcondition(signal, "${p.name}", "⚡ ${p.name} — {{ticker}} {{interval}}")`;
+}
+
+function savePattern() {
+  const name = document.getElementById('f-name').value.trim();
+  const cat = document.getElementById('f-cat').value;
+  const dir = document.getElementById('f-dir').value;
+  const tf = document.getElementById('f-tf').value;
+  const wr = parseInt(document.getElementById('f-wr').value) || 60;
+  const desc = document.getElementById('f-desc').value.trim();
+  const setupRaw = document.getElementById('f-setup').value.trim();
+
+  if (!name || !desc) { showToast('⚠ Completá al menos nombre y descripción'); return; }
+
+  const setup = setupRaw ? setupRaw.split('\n').filter(s => s.trim()) : [];
+  const newP = { id: Date.now(), name, category: cat, direction: dir, tf, wr, desc, setup, pine: '', screenshots: [] };
+  newP.pine = generatePine(newP);
+  patterns.push(newP);
+
+  closeModal();
+  renderPatterns();
+  showToast('✅ Patrón guardado — Pine Script generado');
+
+  // Reset
+  ['f-name','f-desc','f-setup'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-wr').value = '';
+}
+
+// ─── MODAL ALERT ───────────────────────────────────────────────
+
+function openAlertModal() {
+  const sel = document.getElementById('a-pattern');
+  sel.innerHTML = patterns.map(p => `<option>${p.name}</option>`).join('');
+  document.getElementById('a-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('modal-alert').classList.add('open');
+}
+
+function openAlertModalFor(patternName) {
+  openAlertModal();
+  const sel = document.getElementById('a-pattern');
+  for (let o of sel.options) if (o.value === patternName) { o.selected = true; break; }
+}
+
+function closeAlertModal() {
+  document.getElementById('modal-alert').classList.remove('open');
+}
+
+function saveAlert() {
+  const pair = document.getElementById('a-pair').value.trim();
+  const date = document.getElementById('a-date').value;
+  const pattern = document.getElementById('a-pattern').value;
+  const tf = document.getElementById('a-tf').value;
+  const dir = document.getElementById('a-dir').value;
+  const result = document.getElementById('a-result').value;
+  const note = document.getElementById('a-notes').value.trim();
+
+  if (!pair) { showToast('⚠ Ingresá el par'); return; }
+
+  alerts.push({ pair, date, pattern, tf, dir, result: result.toUpperCase(), note });
+  closeAlertModal();
+  updateStats();
+  showToast('📸 Alerta registrada correctamente');
+  document.getElementById('a-pair').value = '';
+  document.getElementById('a-notes').value = '';
+}
+
+// Close modals on overlay click
+document.getElementById('modal-pattern').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('modal-alert').addEventListener('click', function(e) {
+  if (e.target === this) closeAlertModal();
+});
+
+// ─── INIT ──────────────────────────────────────────────────────
+renderPatterns();
+</script>
+</body>
+</html>
