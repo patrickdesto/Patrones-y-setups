@@ -43,7 +43,7 @@ avisoNaranja = tendenciaCorrecta and precioBajoMedias and rsiEnZona and math.max
 barcolor(triggerEntrada ? color.green : (avisoNaranja ? color.orange : na))
 
 // --- 7. DIBUJO DE SMAs MATE ---
-plot(sma20,  color=color.new(#006400, 10), title="SMA 20",  linewidth=2)
-plot(sma50,  color=color.new(#DAA520, 10), title="SMA 50",  linewidth=2)
-plot(sma100, color=color.new(#bd5d04, 10), title="SMA 100", linewidth=2)
-plot(sma200, color=color.new(#8B0000, 10), title="SMA 200", linewidth=2)
+plot(sma20,  color=color.new(#00332a, 10), title="SMA 20",  linewidth=2)
+plot(sma50,  color=color.new(#fbc02d, 10), title="SMA 50",  linewidth=2)
+plot(sma100, color=color.new(#e65100, 10), title="SMA 100", linewidth=2)
+plot(sma200, color=color.new(#801922, 10), title="SMA 200", linewidth=2)
