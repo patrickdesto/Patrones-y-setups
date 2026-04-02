@@ -1,7 +1,8 @@
 //@version=6
-strategy("Estrategia Reversión: Gatillo Quirúrgico 40-60", overlay=true, initial_capital=1000)
+strategy("Estrategia Reversión: Gatillo Quirúrgico V3", overlay=true, initial_capital=1000)
 
-// --- 1. SMAs MATE OSCURAS ---
+// --- 1. SMAs MATE OSCURAS (LÍNEAS FINAS) ---
+// Cambiamos linewidth a 1 para que sean más estéticas
 sma20  = ta.sma(close, 20)
 sma50  = ta.sma(close, 50)
 sma100 = ta.sma(close, 100)
@@ -9,24 +10,18 @@ sma200 = ta.sma(close, 200)
 rsiVal = ta.rsi(close, 14)
 
 // --- 2. FILTROS DE TENDENCIA INSTITUCIONAL ---
-// La 100 debe estar debajo de la 200 (Tendencia bajista sólida)
 tendenciaCorrecta = sma100 < sma200 
 precioBajoMedias  = close < sma100 and close < sma200
 
 // --- 3. AVISO DE PISO EXTREMO (VISUAL SOLAMENTE) ---
-// Marcamos si tocó los 26, pero NO bloquea la entrada si no llega ahí
 tocoPisoExtremo = rsiVal < 26
 plotshape(tocoPisoExtremo, style=shape.diamond, location=location.belowbar, color=color.new(#00ced1, 0), size=size.tiny, title="Aviso < 26")
 
-// --- 4. GATILLO QUIRÚRGICO ---
-// Condición A: El RSI está en la zona exacta de 40 a 60
+// --- 4. GATILLO QUIRÚRGICO (MONTAJE SMA 20 + RSI 40-60) ---
 rsiEnZona = rsiVal >= 40 and rsiVal <= 60
-
-// Condición B: El cuerpo de la vela "se monta" (cruza) la SMA 20 justo ahora
-// Usamos ta.crossover sobre el valor mínimo del cuerpo (open o close)
+// ta.crossover detecta el momento exacto en que el cuerpo cruza la media
 cuerpoCruzaSma = ta.crossover(math.min(open, close), sma20)
 
-// CONDICIÓN FINAL (Solo en este momento y no en otro)
 triggerEntrada = tendenciaCorrecta and precioBajoMedias and rsiEnZona and cuerpoCruzaSma
 
 // --- 5. SEÑALES VISUALES Y EJECUCIÓN ---
@@ -37,13 +32,11 @@ if triggerEntrada
 plotshape(triggerEntrada, style=shape.triangleup, location=location.belowbar, color=color.green, size=size.normal)
 
 // --- 6. LÓGICA DE COLOR (AVISO NARANJA) ---
-// Solo pintamos naranja si estamos "al acecho" (Precio debajo de la 20 pero RSI ya en zona)
-// Una vez que se da la entrada, las velas siguientes ya no son naranjas
 avisoNaranja = tendenciaCorrecta and precioBajoMedias and rsiEnZona and math.max(open, close) < sma20
 barcolor(triggerEntrada ? color.green : (avisoNaranja ? color.orange : na))
 
-// --- 7. DIBUJO DE SMAs MATE ---
-plot(sma20,  color=color.new(#00332a, 10), title="SMA 20",  linewidth=2)
-plot(sma50,  color=color.new(#fbc02d, 10), title="SMA 50",  linewidth=2)
-plot(sma100, color=color.new(#e65100, 10), title="SMA 100", linewidth=2)
-plot(sma200, color=color.new(#801922, 10), title="SMA 200", linewidth=2)
+// --- 7. DIBUJO DE SMAs MATE (LINEWIDTH=1) ---
+plot(sma20,  color=color.new(#00332a, 10), title="SMA 20",  linewidth=1)
+plot(sma50,  color=color.new(#fbc02d, 10), title="SMA 50",  linewidth=1)
+plot(sma100, color=color.new(#e65100, 10), title="SMA 100", linewidth=1)
+plot(sma200, color=color.new(#801922, 10), title="SMA 200", linewidth=1)
