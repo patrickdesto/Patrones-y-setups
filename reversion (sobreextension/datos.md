@@ -2,8 +2,7 @@ Tiempo promedio formacion de patron:
 - frame-time (1hora):
 - caso 1 (1 dia, 11 horas)
 - caso 2 (1 dia, 15 horas) montaje sobre ema 20 / (1 dia, 23 horas ) salida
-
-
+- caso 3 (1 dia, 17 horas)
 
 Rsi - datos importantes que valos el rsi
 - divergencia (agrgar filtro en para que si no esta sobre vendido en la zona del 26 para abajo no valore el patron)-pero agragar condional de la zona de gatillo zona 40-60.
