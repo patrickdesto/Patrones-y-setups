@@ -1,4 +1,4 @@
-**# Estructura Detallada de la Tendencia Bajista (Patrones Correctivos)
+# Estructura Detallada de la Tendencia Bajista (Patrones Correctivos)
 
 Este análisis desglosa la secuencia lógica de una tendencia bajista, identificando dos figuras correctivas clave y sus interacciones con el volumen y las EMAs.
 
@@ -38,4 +38,4 @@ Este análisis desglosa la secuencia lógica de una tendencia bajista, identific
     * En **Tendencias Bajistas**, el pánico suele acelerar los tiempos, pero la lógica de las EMAs (20 y 50) como zonas de acumulación se mantiene constante.
 
 ---
-> **Conclusión de Análisis:** Identificar la transición del primer al segundo patrón correctivo permite gestionar el riesgo de manera más eficiente, reconociendo el "segundo patrón" como la fase de mayor volatilidad previa al desenlace del movimiento.**
+> **Conclusión de Análisis:** Identificar la transición del primer al segundo patrón correctivo permite gestionar el riesgo de manera más eficiente, reconociendo el "segundo patrón" como la fase de mayor volatilidad previa al desenlace del movimiento.
