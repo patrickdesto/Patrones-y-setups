@@ -36,7 +36,7 @@ Este análisis desglosa la secuencia lógica de una tendencia bajista, identific
 * **Repetición Constante:** La clave del éxito operativo reside en identificar la repetición de estos procesos independientemente de su duración exacta.
 * **Simetría Temporal:**
   * En **Tendencias Alcistas**, los procesos suelen ser más extensos. El desarrollo de los patrones es más largo y requiere desplazar esta misma visión a marcos de tiempo más amplios.
-    * En **Tendencias Bajistas**, el pánico suele acelerar los tiempos, pero la lógica de las EMAs (20 y 50) como zonas de acumulación se mantiene constante.
+  * En **Tendencias Bajistas**, el pánico suele acelerar los tiempos, pero la lógica de las EMAs (20 y 50) como zonas de acumulación se mantiene constante.
 
 ---
 > **Conclusión de Análisis:** Identificar la transición del primer al segundo patrón correctivo permite gestionar el riesgo de manera más eficiente, reconociendo el "segundo patrón" como la fase de mayor volatilidad previa al desenlace del movimiento.
