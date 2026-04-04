@@ -34,7 +34,8 @@ Este análisis desglosa la secuencia lógica de una tendencia bajista, identific
 
 ### 3. Tesis Operativa y Comparativa
 * **Repetición Constante:** La clave del éxito operativo reside en identificar la repetición de estos procesos independientemente de su duración exacta.
-* **Simetría Temporal:** * En **Tendencias Alcistas**, los procesos suelen ser más extensos. El desarrollo de los patrones es más largo y requiere desplazar esta misma visión a marcos de tiempo más amplios.
+* **Simetría Temporal:**
+  * En **Tendencias Alcistas**, los procesos suelen ser más extensos. El desarrollo de los patrones es más largo y requiere desplazar esta misma visión a marcos de tiempo más amplios.
     * En **Tendencias Bajistas**, el pánico suele acelerar los tiempos, pero la lógica de las EMAs (20 y 50) como zonas de acumulación se mantiene constante.
 
 ---
