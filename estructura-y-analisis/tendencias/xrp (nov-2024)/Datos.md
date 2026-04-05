@@ -1,16 +1,16 @@
-# Case Study: Rally Parabólico y Re-acumulación de Órdenes (XRP)
+# Caso estudio: Rally Parabólico y Re-acumulación de Órdenes (XRP)
 
 Análisis técnico del impulso alcista (+452%) detallando la estructura de las banderas de continuación en intradía y la validación de confluencia macro.
 
 ---
 
-### 1. Métricas Generales del Impulso (Momentum Metrics)
+### 1. Métricas Generales del Impulso 
 * **Ventana Temporal:** 4 de noviembre 2024 - 2 de diciembre 2024.
 * **Duración Total:** 28 días de expansión continua.
 * **Performance:** +452%.
 * **TF de Observación Principal:** Gráfico de 4 Horas (4H).
 
-### 2. Estructura Micro-Tendencial: Banderas de Continuación (4H)
+### 2. Estructura Tendencial: Patrones-figuras correctivas (4H)
 Durante el desarrollo del rally, el precio formó dos estructuras técnicas clave que sirvieron para "resetear" los osciladores y re-acumular órdenes antes de la siguiente fase expansiva:
 
 #### Re-acumulación 1 (16 - 21 de noviembre)
