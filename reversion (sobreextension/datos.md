@@ -7,6 +7,9 @@ Este documento centraliza los tiempos promedio de formación del patrón y las c
 ### 1. Estadísticas de Tiempo y Promedios (Backtesting)
 Basado en los casos documentados en el time-frame de 1 Hora (1H), se establecen las siguientes métricas de maduración:
 
+* **Promedio General de Formación (1H):
+    -caso 1: 20 horas y 15 minutos
+
 * **Promedio General de Formación (1H):** * **37 horas y 30 minutos** (Aproximadamente 1 día y 13.5 horas).
     * El rango de consistencia operativa oscila entre las 34 y las 41 horas.
 * **Desglose de Casos de Referencia (1H):**
