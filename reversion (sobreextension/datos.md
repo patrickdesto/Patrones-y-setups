@@ -9,6 +9,7 @@ Métricas de maduración estructural segmentadas por marco temporal:
 
 * **Temporalidad de 15 Minutos (15m):**
     * **Caso 1:** 20 horas y 15 minutos de formación base.
+    * **Caso 2:** 18 horas.
 * **Temporalidad de 1 Hora (1H):**
     * **Promedio General:** 37 horas y 30 minutos (Aproximadamente 1 día y 13.5 horas).
     * **Rango de Consistencia:** Oscila entre las 34 y las 41 horas.
