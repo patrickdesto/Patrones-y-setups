@@ -6,4 +6,5 @@ exiten situciones previa que dan aun mayor efectividad (independiente de quese t
  -caso 1: luego de desarrollarse una vela (super-bearish) se da este patron en el cual las dos primeras velas son alcistas perono son de reversion ( no suelen dejar mucha mecha
  para abajo) y la ultima vela suele dejar una doji de reversion que termina de dar forma al patron, suele suceder que ese dia la vela no tome tal forma de reversion sino hasta el final de la rueda con una subida brusca.
     - suele suceder que este patron se forme luego de una vela semala bajistas (con cuerpo grande) y por tanto el patron (en tiempo diario) arranque el lunes con el mercado comprardor y repitiendo el patron explicado.
- 
+    - si este se dda en contexto de tendencia bajista y sumado a este se desarrolla en zona de resolucion de un patron correcticvo de esa tenendecia tiene aunn mayor probabilidad (ver imagenes), sumado a esto la vela de reversion si se da los miercoles o
+    domingo la fiabiidad del patron es altisima.
