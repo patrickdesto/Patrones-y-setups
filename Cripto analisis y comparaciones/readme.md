@@ -1,34 +1,41 @@
-top 10:
--btc 
--eth 
--bnb
--sol
+# Clasificación de Activos por Capitalización de Mercado (Market Cap)
 
-top 20
--ada 
--bitcoin cash
--link 
--stellar
--
+Este listado organiza los activos de interés según su jerarquía de capitalización, permitiendo identificar el nivel de liquidez y la volatilidad esperada para la aplicación de los setups técnicos.
 
-top 30
--avax
--sui
--tao
--dot 
--uni
+---
 
-top 40 -50
--near
--aave
--render
--algo
--kaspa
+### 1. Top 10 (High Cap / Máxima Liquidez)
+* BTC (Bitcoin)
+* ETH (Ethereum)
+* BNB (Binance Coin)
+* SOL (Solana)
 
-top>60
--ethena
--fet
--injective
+### 2. Top 20
+* ADA (Cardano)
+* Bitcoin Cash (BCH)
+* LINK (Chainlink)
+* Stellar (XLM)
 
+### 3. Top 30
+* AVAX (Avalanche)
+* SUI
+* TAO (Bittensor)
+* DOT (Polkadot)
+* UNI (Uniswap)
+
+### 4. Top 40 - 50
+* NEAR (Near Protocol)
+* AAVE
+* RENDER
+* ALGO (Algorand)
+* KASPA
+
+### 5. Top > 60 (Mid/Low Cap / Mayor Volatilidad)
+* Ethena (ENA)
+* FET (Artificial Superintelligence Alliance)
+* Injective (INJ)
+
+---
+> **Nota Operativa:** A menor capitalización de mercado, mayor es la sensibilidad del activo a los movimientos de BTC y mayor el potencial de volatilidad en el desarrollo de los patrones correctivos.
 
 
