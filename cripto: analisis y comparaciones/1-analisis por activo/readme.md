@@ -9,9 +9,10 @@ d-fechas o tiempos de ejecucion
 
 ---
 
-### 1. Top 10 (High Cap / Máxima Liquidez)
+### 1. Top 10 (High Cap)
 * BTC (Bitcoin)
 * ETH (Ethereum)
+* XRP (Ripple)
 * BNB (Binance Coin)
 * SOL (Solana)
 
