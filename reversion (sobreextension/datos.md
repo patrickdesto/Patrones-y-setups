@@ -19,7 +19,8 @@ Métricas de maduración estructural segmentadas por marco temporal:
         * Caso 3: 1 día y 17 horas (41h total).
         * Caso 4: 1 día y 10 horas hasta la salida (34h total).
 * **Temporalidad Mayor (4H):**
-    * **Caso 1:** 4 días y 2 horas (98h total). 
+    * **Caso 1:** 4 días y 2 horas (98h total).
+    * **Caso 2:** 4 dias 20 horas.
     * **Nota:** El tiempo de formación en 4H se multiplica aproximadamente x2.6 respecto al gráfico de 1H.
 
 ### 2. Configuración Lógica del RSI (Momentum Trigger)
