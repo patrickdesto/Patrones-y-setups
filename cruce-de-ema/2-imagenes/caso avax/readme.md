@@ -11,7 +11,7 @@ Análisis de estructura macro. Evaluación de soportes históricos vs. inercia b
     * Montaje sobre la EMA del RSI (intento de recuperación de fuerza).
 * **Volumen:** Perfil de volumen en descenso, indicando posible agotamiento de la presión vendedora.
 
-### 2. Marco Temporal: Diario (1D Setup)
+### 2. Marco Temporal: Diario 
 * **RSI:** Ubicado en **zona de gatillo**, pero con baja verticalidad (señal poco clara).
 * **Volumen:** El volumen en los testeos de soportes locales va en descenso (falta de interés vendedor en mínimos).
 * **EMAs:** Configuración de **EMA 20 y 50 en fase de acumulación** (Squeeze).
