@@ -21,6 +21,7 @@ d-fechas o tiempos de ejecucion
 * Bitcoin Cash (BCH)
 * LINK (Chainlink)
 * Stellar (XLM)
+* Toncoin (TON)
 
 ### 3. Top 30
 * AVAX (Avalanche)
