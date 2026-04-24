@@ -18,7 +18,8 @@ Métricas de maduración estructural segmentadas por marco temporal:
         * Caso 2: 1 día y 15 horas para el montaje sobre EMA 20 (39h total) / Salida a las 47h (1 día y 23h).
         * Caso 3: 1 día y 17 horas (41h total).
         * Caso 4: 1 día y 10 horas hasta la salida (34h total).
-        * caso 5: 1 dia y 5 horas 
+        * caso 5: 1 dia y 5 horas.
+        * caso 6: 1 dia y 12 horas.
 * **Temporalidad Mayor (4H):**
     * **Caso 1:** 4 días y 2 horas (98h total).
     * **Caso 2:** 4 dias 20 horas.
