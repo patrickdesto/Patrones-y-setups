@@ -7,10 +7,10 @@ Este documento centraliza los tiempos promedio de formación del patrón y las c
 ### 1. Estadísticas de Tiempo y Promedios (Backtesting)
 Métricas de maduración estructural segmentadas por marco temporal:
 
-* **Temporalidad de 15 Minutos (15m):**
-    * **Caso 1:** 20 horas y 15 minutos de formación base.
-    * **Caso 2:** 18 horas.
-* **Temporalidad de 1 Hora (1H):**
+* **Temporalidad  (15 Minutos):**
+     * caso 1:** 20 horas y 15 minutos de formación base.
+     * caso 2:** 18 horas.
+* **Temporalidad de (1 Hora):**
     * **Promedio General:** 37 horas y 30 minutos (Aproximadamente 1 día y 13.5 horas).
     * **Rango de Consistencia:** Oscila entre las 34 y las 41 horas.
     * **Desglose de Casos:**
@@ -20,10 +20,11 @@ Métricas de maduración estructural segmentadas por marco temporal:
         * Caso 4: 1 día y 10 horas hasta la salida (34h total).
         * caso 5: 1 dia y 5 horas.
         * caso 6: 1 dia y 12 horas.
-* **Temporalidad Mayor (4H):**
-    * **Caso 1:** 4 días y 2 horas (98h total).
-    * **Caso 2:** 4 dias 20 horas.
-    * **caso 3:** 3 dias 20 horas.
+* **Temporalidad  (4 horas):**
+       * caso 1:** 4 días y 2 horas (98h total).
+       * caso 2:** 4 dias 20 horas.
+       * caso 3:** 3 dias 20 horas.
+   
     * **Nota:** El tiempo de formación en 4H se multiplica aproximadamente x2.6 respecto al gráfico de 1H.
 
 ### 2. Configuración Lógica del RSI (Momentum Trigger)
@@ -41,7 +42,7 @@ Reglas de filtrado para la activación del gatillo y confirmación de la entrada
 Criterios de validación visual antes de ejecutar la orden:
 
 * **Análisis Multi-Temporal (MTF):**
-    * Verificación obligatoria en **4HS y Diario (1D)** para asegurar que el sesgo mayor acompaña el rebote.
+    * Verificación obligatoria en **4 horas y Diario (1D)** para asegurar que el sesgo mayor acompaña el rebote.
 * **Identificación de Patrones de Reversión:**
     * Estructura de tres velas consecutivas seguidas de un **Doji final** (agotamiento).
     * Validación con patrones de velas japonesas (Envolventes, Martillos, etc.).
