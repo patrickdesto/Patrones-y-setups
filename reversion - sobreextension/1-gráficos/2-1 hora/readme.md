@@ -1,8 +1,6 @@
 ---
 
-## Patrón: Doble suelo + divergencia alcista RSI (1H)
-
-**9 instancias registradas** · Binance · Timeframe 1H · MA Ribbon (SMA 20/50/100/200) + RSI(14)
+## Patrón: divergencia alcista RSI (1H)
 
 ---
 
