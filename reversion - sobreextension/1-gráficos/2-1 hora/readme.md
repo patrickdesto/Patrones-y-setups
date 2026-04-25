@@ -29,9 +29,9 @@
 | ETH/USDT (feb 2026) | 47 | 1d 23h | 20.00 |
 | SOL/USDT | 38 | 1d 14h | 52.95 |
 | SUI/USDT | 46 | 1d 22h | 43.37 |
-| BTC/USDT (dic 2025) | 29 | 1d 5h | 46.12 |
-| ETH/USDT (dic 2025) | 34 | 1d 10h | 43.30 |
-| BTC/USDT (oct 2025) | 33 | 1d 9h | 41.49 |
+| BTC/USDT | 29 | 1d 5h | 46.12 |
+| ETH/USDT | 34 | 1d 10h | 43.30 |
+| BTC/USDT | 33 | 1d 9h | 41.49 |
 
 ---
 
