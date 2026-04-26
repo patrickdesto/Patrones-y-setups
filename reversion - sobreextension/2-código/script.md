@@ -161,3 +161,7 @@ plot(sma20,  color=color.new(#00332a, 10), title="SMA 20",  linewidth=1)
 plot(sma50,  color=color.new(#fbc02d, 10), title="SMA 50",  linewidth=1)
 plot(sma100, color=color.new(#e65100, 10), title="SMA 100", linewidth=1)
 plot(sma200, color=color.new(#801922, 10), title="SMA 200", linewidth=1)
+
+plot(sma50,  color=color.new(#fbc02d, 10), title="SMA 50",  linewidth=1)
+plot(sma100, color=color.new(#e65100, 10), title="SMA 100", linewidth=1)
+plot(sma200, color=color.new(#801922, 10), title="SMA 200", linewidth=1)
